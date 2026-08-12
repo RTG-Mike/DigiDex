@@ -1,6 +1,8 @@
 package com.example.digidex
 
+import android.R
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,10 +22,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             DigiDexTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    lifeCounter(
+                        counter = 4,
                         modifier = Modifier.padding(innerPadding)
                     )
+                    override fun onTouchEvent(event: MotionEvent): Boolean {
+                        when (event.action) {
+                            MotionEvent.ACTION_DOWN -> {
+                                counter = counter + 1
+
+
+                            }
+                        }
+
+                        return super.onTouchEvent(event)
+                    }
+
+
                 }
             }
         }
@@ -31,17 +46,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun lifeCounter(counter: R.integer , modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        score = counter.toString()
+
+
+
     )
 }
 
+
 @Preview(showBackground = true)
+
 @Composable
 fun GreetingPreview() {
     DigiDexTheme {
-        Greeting("Android")
+        Greeting("score")
     }
 }
